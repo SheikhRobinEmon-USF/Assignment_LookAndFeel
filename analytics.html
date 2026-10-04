@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Coaster Coast: Analytics</title>
+  <meta name="description" content="Florida theme park attendance from 2021 to 2024, coaster top speeds and ride access by rider height.">
+  <meta name="theme-color" content="#f3f7f8" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0d1826" media="(prefers-color-scheme: dark)">
+  <meta property="og:title" content="Coaster Coast: Analytics">
+  <meta property="og:description" content="Florida theme park attendance from 2021 to 2024, coaster top speeds and ride access by rider height.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&amp;family=Bricolage+Grotesque:opsz,wght@12..96,600..800&amp;display=swap">
+  <link rel="stylesheet" href="css/main.css">
+  <script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="index.html"><svg viewBox="0 0 40 40" aria-hidden="true" focusable="false"><rect width="40" height="40" rx="11" fill="#ffc53d"/><path d="M5 31c6 0 8-17 15-17 6 0 6 9 1 9s-4-10 3-11c6-1 8 19 11 19" fill="none" stroke="#13243a" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 35h30" stroke="#13243a" stroke-width="2.4" stroke-linecap="round"/></svg><span>Coaster Coast</span></a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        Menu
+      </button>
+      <nav id="site-nav" class="site-nav" aria-label="Main">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="managerides.html">Manage rides</a></li>
+          <li><a href="analytics.html" aria-current="page">Analytics</a></li>
+          <li><a href="aboutus.html">About us</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="wrap">
+      <div class="page-head">
+        <h1>Florida by the numbers</h1>
+        <p>How many people visit each park, how attendance has moved since 2021, and what the ride list says about speed and height.</p>
+      </div>
+
+      <dl class="kpis" aria-label="Key figures">
+        <div><dt>visited Florida's eight indexed parks in 2024</dt><dd id="kpi-total">76.4M</dd><span class="sub" id="kpi-total-sub"></span></div>
+        <div><dt>of all visits to North America's 20 busiest parks</dt><dd id="kpi-share">53%</dd><span class="sub" id="kpi-share-sub"></span></div>
+        <div><dt>visitors at Magic Kingdom, the busiest park in the world</dt><dd id="kpi-top">17.8M</dd><span class="sub" id="kpi-top-sub"></span></div>
+        <div><dt>top speed of the fastest ride on the list</dt><dd id="kpi-fast">76 mph</dd><span class="sub" id="kpi-fast-sub"></span></div>
+      </dl>
+
+      <div class="chart-grid charts">
+        <figure class="chart-card" id="card-attendance">
+          <header>
+            <div>
+              <h2>Visitors per park in 2024</h2>
+              <p>Magic Kingdom drew nearly twice as many visitors as either Universal park.</p>
+            </div>
+          </header>
+          <ul class="legend" data-legend="operators"></ul>
+          <div class="chart" id="chart-attendance"></div>
+          <button class="btn btn-sm table-toggle" type="button" aria-expanded="false" aria-controls="table-attendance">Show data table</button>
+          <div class="chart-table-wrap" id="table-attendance" hidden></div>
+          <figcaption>Source: TEA/AECOM Global Experience Index 2024. Epic Universe opened in 2025 and is not in the index yet.</figcaption>
+        </figure>
+
+        <figure class="chart-card" id="card-trend">
+          <header>
+            <div>
+              <h2>Visitors by operator, 2021 to 2024</h2>
+              <p>Every operator bounced back in 2022. Since then Disney has kept inching up, while Universal's two parks lost about 2.8 million visits before Epic Universe opened.</p>
+            </div>
+          </header>
+          <ul class="legend" data-legend="operators"></ul>
+          <div class="chart" id="chart-trend"></div>
+          <button class="btn btn-sm table-toggle" type="button" aria-expanded="false" aria-controls="table-trend">Show data table</button>
+          <div class="chart-table-wrap" id="table-trend" hidden></div>
+          <figcaption>Totals of each operator's Florida parks in the index. Source: TEA/AECOM Global Experience Index, 2021 to 2024 editions.</figcaption>
+        </figure>
+
+        <div class="chart-grid two">
+          <figure class="chart-card" id="card-speed">
+            <header>
+              <div>
+                <h2>Fastest rides on the list</h2>
+                <p id="speed-lede">Ranked by published top speed.</p>
+              </div>
+            </header>
+            <ul class="legend" data-legend="operators"></ul>
+            <div class="chart" id="chart-speed"></div>
+            <button class="btn btn-sm table-toggle" type="button" aria-expanded="false" aria-controls="table-speed">Show data table</button>
+            <div class="chart-table-wrap" id="table-speed" hidden></div>
+            <figcaption>Rides with a published top speed, from the <a href="managerides.html">ride database</a>. Edits there show up here.</figcaption>
+          </figure>
+
+          <figure class="chart-card" id="card-height">
+            <header>
+              <div>
+                <h2>Rides open at each height</h2>
+                <p id="height-lede">Each step is a height where more rides open up.</p>
+              </div>
+            </header>
+            <div class="height-control">
+              <label for="a-height">Rider height</label>
+              <input class="range" type="range" id="a-height" min="30" max="60" step="1" value="44" aria-valuetext="44 inches">
+              <output id="a-height-out" for="a-height">44 in</output>
+            </div>
+            <div class="chart" id="chart-height"></div>
+            <button class="btn btn-sm table-toggle" type="button" aria-expanded="false" aria-controls="table-height">Show data table</button>
+            <div class="chart-table-wrap" id="table-height" hidden></div>
+            <figcaption>Count of rides in the <a href="managerides.html">ride database</a> whose minimum height is at or below the rider's height.</figcaption>
+          </figure>
+        </div>
+      </div>
+      <noscript><p>Turn on JavaScript to see the charts.</p></noscript>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <div>
+        <p><strong>Coaster Coast</strong> is a student project for ISM 6225 at the University of South Florida, built by Sheikh Robin Emon.</p>
+        <p class="small">Attendance from the TEA/AECOM Global Experience Index (2021 to 2024). Ride details checked against park and public sources in October 2026. Not affiliated with any park operator.</p>
+      </div>
+      <ul class="footer-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="managerides.html">Manage rides</a></li>
+        <li><a href="analytics.html">Analytics</a></li>
+        <li><a href="aboutus.html">About us</a></li>
+        <li><a href="https://github.com/SheikhRobinEmon-USF/Assignment_LookAndFeel">Source code on GitHub</a></li>
+      </ul>
+    </div>
+  </footer>
+  <div class="toast-region" aria-live="polite"></div>
+  <script src="js/vendor/d3.custom.min.js" defer></script>
+  <script src="js/data.js" defer></script>
+  <script src="js/main.js" defer></script>
+  <script src="js/analytics.js" defer></script>
+</body>
+</html>

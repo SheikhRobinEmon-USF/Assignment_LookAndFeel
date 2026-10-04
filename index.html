@@ -1,1 +1,158 @@
-<!--Your HTML code here-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Coaster Coast: Florida theme park ride planner</title>
+  <meta name="description" content="Check which Florida theme park rides a rider can board by height, and compare the nine biggest parks in the state.">
+  <meta name="theme-color" content="#f3f7f8" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0d1826" media="(prefers-color-scheme: dark)">
+  <meta property="og:title" content="Coaster Coast: Florida theme park ride planner">
+  <meta property="og:description" content="Check which Florida theme park rides a rider can board by height, and compare the nine biggest parks in the state.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&amp;family=Bricolage+Grotesque:opsz,wght@12..96,600..800&amp;display=swap">
+  <link rel="stylesheet" href="css/main.css">
+  <script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="index.html"><svg viewBox="0 0 40 40" aria-hidden="true" focusable="false"><rect width="40" height="40" rx="11" fill="#ffc53d"/><path d="M5 31c6 0 8-17 15-17 6 0 6 9 1 9s-4-10 3-11c6-1 8 19 11 19" fill="none" stroke="#13243a" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 35h30" stroke="#13243a" stroke-width="2.4" stroke-linecap="round"/></svg><span>Coaster Coast</span></a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        Menu
+      </button>
+      <nav id="site-nav" class="site-nav" aria-label="Main">
+        <ul>
+          <li><a href="index.html" aria-current="page">Home</a></li>
+          <li><a href="managerides.html">Manage rides</a></li>
+          <li><a href="analytics.html">Analytics</a></li>
+          <li><a href="aboutus.html">About us</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="wrap hero-grid">
+        <div>
+          <h1 id="hero-title">Know which rides you can ride before you go.</h1>
+          <p class="hero-lede">Coaster Coast tracks the headline rides at nine Florida theme parks, from Magic Kingdom to Busch Gardens Tampa Bay. Set a rider's height and see every ride that is open to them.</p>
+          <dl class="hero-facts">
+            <div><dt>theme parks</dt><dd id="fact-parks">9</dd></div>
+            <div><dt>rides tracked</dt><dd id="fact-rides">27</dd></div>
+            <div><dt>visitors in 2024</dt><dd id="fact-visitors">76.4M</dd></div>
+          </dl>
+        </div>
+
+        <div class="height-sign" role="group" aria-labelledby="checker-title">
+          <div class="ruler" id="ruler" aria-hidden="true">
+            <ol class="ruler-labels">
+              <li style="bottom: 20%">36</li>
+              <li style="bottom: 40%">42</li>
+              <li style="bottom: 60%">48</li>
+              <li style="bottom: 80%">54</li>
+            </ol>
+            <div class="ruler-marker"></div>
+          </div>
+
+          <div class="checker">
+            <h2 id="checker-title">Rider height</h2>
+            <p class="checker-height"><output id="height-out" for="height">44</output><span>inches</span></p>
+            <p class="checker-metric" id="height-metric">112 cm</p>
+            <div class="stepper">
+              <button class="icon-btn" type="button" id="height-down" aria-label="One inch shorter">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M5 12h14"/></svg>
+              </button>
+              <label class="visually-hidden" for="height">Rider height in inches</label>
+              <input class="range" type="range" id="height" min="30" max="60" step="1" value="44" aria-valuetext="44 inches">
+              <button class="icon-btn" type="button" id="height-up" aria-label="One inch taller">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M12 5v14M5 12h14"/></svg>
+              </button>
+            </div>
+            <p class="checker-result" aria-live="polite">
+              <strong id="height-count">14 of 27 rides</strong>
+              <span id="height-note">Parks measure every rider at the entrance, so treat this as a guide.</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="access" aria-labelledby="access-title">
+      <div class="wrap">
+        <div class="access-bar">
+          <h2 id="access-title">Rides by park</h2>
+          <label class="check"><input type="checkbox" id="only-ok"> Only show rides this rider can board</label>
+        </div>
+        <div class="park-groups" id="park-groups">
+          <noscript><p>Turn on JavaScript to check rides by height. The full ride list is on the <a href="managerides.html">Manage rides</a> page.</p></noscript>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="parks-title">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 id="parks-title">The parks</h2>
+          <p>Annual visitors from the 2024 TEA/AECOM Global Experience Index. Epic Universe opened on May 22, 2025, so it has no full year of attendance yet.</p>
+        </div>
+        <table class="parks-table">
+          <caption class="visually-hidden">Florida theme parks with operator, city, opening year and 2024 attendance</caption>
+          <thead>
+            <tr>
+              <th scope="col">Park</th>
+              <th scope="col">Operator</th>
+              <th scope="col" class="city">City</th>
+              <th scope="col" class="opened">Opened</th>
+              <th scope="col" class="bar-cell">Visitors in 2024</th>
+            </tr>
+          </thead>
+          <tbody id="parks-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="next-title">
+      <div class="wrap">
+        <h2 id="next-title">Keep planning</h2>
+        <div class="next-grid">
+          <a class="next-link" href="managerides.html">
+            <h3>Manage rides</h3>
+            <p>Search the ride database, add a new ride, fix a height requirement or remove a ride that has closed.</p>
+          </a>
+          <a class="next-link" href="analytics.html">
+            <h3>See the analytics</h3>
+            <p>Attendance trends since 2021, the fastest coasters in the state and how many rides open up with every inch.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <div>
+        <p><strong>Coaster Coast</strong> is a student project for ISM 6225 at the University of South Florida, built by Sheikh Robin Emon.</p>
+        <p class="small">Attendance from the TEA/AECOM Global Experience Index (2021 to 2024). Ride details checked against park and public sources in October 2026. Not affiliated with any park operator.</p>
+      </div>
+      <ul class="footer-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="managerides.html">Manage rides</a></li>
+        <li><a href="analytics.html">Analytics</a></li>
+        <li><a href="aboutus.html">About us</a></li>
+        <li><a href="https://github.com/SheikhRobinEmon-USF/Assignment_LookAndFeel">Source code on GitHub</a></li>
+      </ul>
+    </div>
+  </footer>
+  <div class="toast-region" aria-live="polite"></div>
+  <script src="js/data.js" defer></script>
+  <script src="js/main.js" defer></script>
+  <script src="js/home.js" defer></script>
+</body>
+</html>
