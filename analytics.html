@@ -13,7 +13,9 @@
   <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&amp;family=Bricolage+Grotesque:opsz,wght@12..96,600..800&amp;display=swap">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&amp;family=Bricolage+Grotesque:opsz,wght@12..96,600..800&amp;display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&amp;family=Bricolage+Grotesque:opsz,wght@12..96,600..800&amp;display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&amp;family=Bricolage+Grotesque:opsz,wght@12..96,600..800&amp;display=swap"></noscript>
   <link rel="stylesheet" href="css/main.css">
   <script>document.documentElement.classList.add("js");</script>
 </head>
@@ -45,10 +47,10 @@
       </div>
 
       <dl class="kpis" aria-label="Key figures">
-        <div><dt>visited Florida's eight indexed parks in 2024</dt><dd id="kpi-total">76.4M</dd><span class="sub" id="kpi-total-sub"></span></div>
-        <div><dt>of all visits to North America's 20 busiest parks</dt><dd id="kpi-share">53%</dd><span class="sub" id="kpi-share-sub"></span></div>
-        <div><dt>visitors at Magic Kingdom, the busiest park in the world</dt><dd id="kpi-top">17.8M</dd><span class="sub" id="kpi-top-sub"></span></div>
-        <div><dt>top speed of the fastest ride on the list</dt><dd id="kpi-fast">76 mph</dd><span class="sub" id="kpi-fast-sub"></span></div>
+        <div><dt>visited Florida's eight indexed parks in 2024</dt><dd id="kpi-total">76.4M</dd><dd class="sub" id="kpi-total-sub"></dd></div>
+        <div><dt>of all visits to North America's 20 busiest parks</dt><dd id="kpi-share">53%</dd><dd class="sub" id="kpi-share-sub"></dd></div>
+        <div><dt>visitors at Magic Kingdom, the busiest park in the world</dt><dd id="kpi-top">17.8M</dd><dd class="sub" id="kpi-top-sub"></dd></div>
+        <div><dt>top speed of the fastest ride on the list</dt><dd id="kpi-fast">76 mph</dd><dd class="sub" id="kpi-fast-sub"></dd></div>
       </dl>
 
       <div class="chart-grid charts">

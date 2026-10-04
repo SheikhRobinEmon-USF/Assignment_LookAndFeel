@@ -12,7 +12,7 @@
   --surface-sunk: #e9f0f2;
   --ink: #13243a;
   --ink-2: #46586c;
-  --ink-3: #66788b;
+  --ink-3: #5a6b7e;
   --line: #d3dfe4;
   --line-strong: #a9bcc5;
 
@@ -308,8 +308,8 @@ img, svg { display: block; max-width: 100%; }
 .icon-btn {
   display: inline-grid;
   place-items: center;
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 2.75rem;
+  height: 2.75rem;
   padding: 0;
   border-radius: 999px;
   border: 1px solid transparent;
@@ -812,7 +812,7 @@ dialog.modal::backdrop { background: rgb(13 24 38 / 0.55); }
 .kpis div { display: grid; gap: var(--space-1); align-content: start; }
 .kpis dt { color: var(--ink-2); font-size: 0.95rem; order: 2; }
 .kpis dd { margin: 0; font-family: var(--font-display); font-size: var(--step-3); font-weight: 800; line-height: 1; letter-spacing: -0.02em; order: 1; font-variant-numeric: tabular-nums; }
-.kpis .sub { order: 3; color: var(--ink-3); font-size: var(--step--1); }
+.kpis dd.sub { order: 3; font-family: var(--font-body); font-size: var(--step--1); font-weight: 400; line-height: 1.4; letter-spacing: 0; color: var(--ink-3); }
 
 .chart-grid { display: grid; gap: var(--space-6); }
 @media (min-width: 64rem) { .chart-grid.two { grid-template-columns: 1fr 1fr; } }
