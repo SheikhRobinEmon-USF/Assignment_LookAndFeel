@@ -15,7 +15,8 @@ A Florida theme park ride planner built for ISM 6225 Assignment 1 (Look and Feel
 
 * Plain HTML, CSS and JavaScript with no build step and no CSS framework.
 * Ride data lives in `js/data.js`. The Manage rides page saves changes to `sessionStorage`, so edits show up on the home page and the analytics charts in the same browser tab. Reset sample data restores the original list.
-* Charts use a trimmed D3.js v7 build (`js/vendor/d3.custom.min.js`, about 60 KB) that loads only on the analytics page.
+* Charts use D3.js v7.9.0 from the jsDelivr CDN, loaded only on the analytics page. `js/vendor/` holds a backup copy of the same release in case the CDN is blocked.
+* Fonts (Bricolage Grotesque and Atkinson Hyperlegible) are self-hosted in `fonts/` under the SIL Open Font License.
 * Responsive down to 320 px wide, with dark mode, keyboard support and reduced motion support.
 
 ## Data sources

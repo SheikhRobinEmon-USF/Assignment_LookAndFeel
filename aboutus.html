@@ -11,11 +11,8 @@
   <meta property="og:description" content="Who built Coaster Coast, how it was made and the technology behind it.">
   <meta property="og:type" content="website">
   <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&amp;family=Bricolage+Grotesque:opsz,wght@12..96,600..800&amp;display=swap">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&amp;family=Bricolage+Grotesque:opsz,wght@12..96,600..800&amp;display=swap" media="print" onload="this.media='all'">
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&amp;family=Bricolage+Grotesque:opsz,wght@12..96,600..800&amp;display=swap"></noscript>
+  <link rel="preload" href="fonts/AtkinsonHyperlegible-Regular-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/BricolageGrotesque-var-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="css/main.css">
   <script>document.documentElement.classList.add("js");</script>
 </head>
@@ -100,8 +97,8 @@
           <p>Next I planned four pages around one consistent menu, then built a small design system first: colors, type scale, spacing and components defined once in a single stylesheet. The yellow ruler and the sign colors borrow from the height signs at every ride entrance. The site supports dark mode, reduced motion and phone screens down to 320 pixels wide.</p>
           <p>A few decisions shaped the build:</p>
           <ul>
-            <li><strong>No CSS framework.</strong> Bootstrap was allowed, but hand written CSS kept the whole stylesheet small and let the site look like its subject instead of a template.</li>
-            <li><strong>A trimmed D3.js build.</strong> The charts use D3.js v7. I bundled only the modules the charts need, which cut the library from about 280 KB to 60 KB, and it loads only on the analytics page.</li>
+            <li><strong>No CSS framework, no third party fonts.</strong> Bootstrap was allowed, but hand written CSS kept the stylesheet small and let the site look like its subject instead of a template. The fonts are trimmed to the characters the site uses and hosted in the repository, so pages make no extra requests to other servers.</li>
+            <li><strong>D3.js from the CDN.</strong> The charts use D3.js v7.9.0 from the jsDelivr CDN, and it loads only on the analytics page. A copy of the same release lives in the repository as a backup, so the charts still work if the CDN is ever blocked.</li>
             <li><strong>One shared data store.</strong> The Manage rides page mocks create, read, update and delete operations on a ride list saved in the browser tab. The height checker and the analytics charts read the same list, so a ride added on one page shows up on the others.</li>
             <li><strong>Accessible by default.</strong> Every page has a skip link, visible keyboard focus and labeled form fields. Forms explain exactly what to fix, and every chart has a data table view and colors tested for color blindness.</li>
           </ul>
@@ -113,9 +110,9 @@
               <tr><th scope="row">HTML5</th><td>Semantic page structure, native dialog elements for the ride forms, accessible tables and form controls.</td></tr>
               <tr><th scope="row">CSS3</th><td>One stylesheet with custom properties, grid and flexbox layouts, a dark theme and responsive table layouts for phones.</td></tr>
               <tr><th scope="row">JavaScript</th><td>Plain JavaScript with no build step. Handles the height checker, the mock CRUD with validation and undo, and the mobile menu.</td></tr>
-              <tr><th scope="row">D3.js v7</th><td>Bar, line and step charts with tooltips, direct labels and responsive resizing.</td></tr>
+              <tr><th scope="row">D3.js v7.9.0</th><td>Loaded from the jsDelivr CDN with an integrity check. Draws the bar, line and step charts with tooltips, direct labels and responsive resizing.</td></tr>
               <tr><th scope="row">Web storage</th><td>sessionStorage keeps ride edits for the current browser tab, so the CRUD page behaves like a real database without a server.</td></tr>
-              <tr><th scope="row">Fonts</th><td>Bricolage Grotesque for headings and Atkinson Hyperlegible for body text, served by Google Fonts.</td></tr>
+              <tr><th scope="row">Fonts</th><td>Bricolage Grotesque for headings and Atkinson Hyperlegible for body text, self-hosted as WOFF2 files under the SIL Open Font License.</td></tr>
               <tr><th scope="row">GitHub Pages</th><td>Hosts the site straight from the repository.</td></tr>
             </tbody>
           </table>
@@ -133,7 +130,8 @@
   js/home.js            Height checker and parks table
   js/rides.js           CRUD logic, validation and dialogs
   js/analytics.js       Chart code
-  js/vendor/            Trimmed D3.js v7 build
+  js/vendor/            Backup copy of D3.js v7.9.0
+  fonts/                Self-hosted web fonts and their licenses
   img/                  Favicon and profile photo</pre>
 
           <h2>Sources</h2>
