@@ -2,17 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Coaster Coast: Florida theme park ride planner</title>
   <meta name="description" content="Check which Florida theme park rides a rider can board by height, and compare the nine biggest parks in the state.">
-  <meta name="theme-color" content="#f3f7f8" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#0d1826" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#cfeaff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#130f33" media="(prefers-color-scheme: dark)">
   <meta property="og:title" content="Coaster Coast: Florida theme park ride planner">
   <meta property="og:description" content="Check which Florida theme park rides a rider can board by height, and compare the nine biggest parks in the state.">
   <meta property="og:type" content="website">
   <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
   <link rel="preload" href="fonts/AtkinsonHyperlegible-Regular-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="fonts/BricolageGrotesque-var-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/Fredoka-var-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="css/main.css">
   <script>document.documentElement.classList.add("js");</script>
 </head>
@@ -22,7 +22,8 @@
     <div class="wrap header-inner">
       <a class="brand" href="index.html"><svg viewBox="0 0 40 40" aria-hidden="true" focusable="false"><rect width="40" height="40" rx="11" fill="#ffc53d"/><path d="M5 31c6 0 8-17 15-17 6 0 6 9 1 9s-4-10 3-11c6-1 8 19 11 19" fill="none" stroke="#13243a" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 35h30" stroke="#13243a" stroke-width="2.4" stroke-linecap="round"/></svg><span>Coaster Coast</span></a>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        <svg class="icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M18 6 6 18M6 6l12 12"/></svg>
         Menu
       </button>
       <nav id="site-nav" class="site-nav" aria-label="Main">
@@ -34,14 +35,29 @@
         </ul>
       </nav>
     </div>
+    <div class="bunting" aria-hidden="true"></div>
   </header>
 
   <main id="main">
-    <section class="hero" aria-labelledby="hero-title">
+    <section class="hero sky" aria-labelledby="hero-title">
+      <svg class="cloud" style="--y: 1.5rem; --w: 8.5rem; --t: 75s; --d: -12s" viewBox="0 0 120 60" aria-hidden="true" focusable="false"><path fill="currentColor" d="M28 52h66a17 17 0 0 0 1-34 25 25 0 0 0-46-7 20 20 0 0 0-23 17 12 12 0 0 0 2 24z"/></svg>
+      <svg class="cloud" style="--y: 6rem; --w: 5.5rem; --t: 95s; --d: -60s" viewBox="0 0 120 60" aria-hidden="true" focusable="false"><path fill="currentColor" d="M28 52h66a17 17 0 0 0 1-34 25 25 0 0 0-46-7 20 20 0 0 0-23 17 12 12 0 0 0 2 24z"/></svg>
+      <svg class="cloud" style="--y: 11rem; --w: 10rem; --t: 120s; --d: -35s" viewBox="0 0 120 60" aria-hidden="true" focusable="false"><path fill="currentColor" d="M28 52h66a17 17 0 0 0 1-34 25 25 0 0 0-46-7 20 20 0 0 0-23 17 12 12 0 0 0 2 24z"/></svg>
+      <div class="coaster-ride" id="coaster-ride" aria-hidden="true">
+        <svg class="track-art" id="track-art" preserveAspectRatio="none"><path class="ties" id="track-ties"/><path class="rail" id="track-rail"/></svg>
+        <svg class="coaster-car" id="coaster-car" viewBox="0 0 64 30" focusable="false">
+          <path d="M9 8l3-5M23 8l-2-5M37 8l3-5M51 8l-2-5" stroke="#211a4d" stroke-width="2.4" stroke-linecap="round"/>
+          <circle cx="16" cy="9" r="5" fill="#ffd9b8" stroke="#211a4d" stroke-width="2"/>
+          <circle cx="44" cy="9" r="5" fill="#c98b5e" stroke="#211a4d" stroke-width="2"/>
+          <rect x="3" y="12" width="58" height="12" rx="6" fill="#ff6fae" stroke="#211a4d" stroke-width="2.4"/>
+          <path d="M11 18h42" stroke="#ffc93c" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="15" cy="26" r="3.2" fill="#211a4d"/><circle cx="49" cy="26" r="3.2" fill="#211a4d"/>
+        </svg>
+      </div>
       <div class="wrap hero-grid">
         <div>
-          <h1 id="hero-title">Know which rides you can ride before you go.</h1>
-          <p class="hero-lede">Coaster Coast tracks the headline rides at nine Florida theme parks, from Magic Kingdom to Busch Gardens Tampa Bay. Set a rider's height and see every ride that is open to them.</p>
+          <h1 id="hero-title">Find every ride your kids can ride.</h1>
+          <p class="hero-lede">Slide to your child's height and see which rides they can board at nine Florida theme parks, from Magic Kingdom to Busch Gardens Tampa Bay. No more surprises at the front of the line.</p>
           <dl class="hero-facts">
             <div><dt>theme parks</dt><dd id="fact-parks">9</dd></div>
             <div><dt>rides tracked</dt><dd id="fact-rides">27</dd></div>
@@ -50,6 +66,14 @@
         </div>
 
         <div class="height-sign" role="group" aria-labelledby="checker-title">
+          <svg class="balloons" viewBox="0 0 88 120" aria-hidden="true" focusable="false">
+            <path d="M24 52c4 22-6 40 18 66M44 46c-2 26 6 44-2 72M66 54c-6 22 4 40-22 64" fill="none" stroke="#211a4d" stroke-width="1.6"/>
+            <ellipse cx="22" cy="30" rx="17" ry="21" fill="#38b6ff" stroke="#211a4d" stroke-width="2"/>
+            <ellipse cx="66" cy="34" rx="17" ry="21" fill="#2fd39a" stroke="#211a4d" stroke-width="2"/>
+            <ellipse cx="44" cy="24" rx="18" ry="22" fill="#ff6fae" stroke="#211a4d" stroke-width="2"/>
+            <path d="M36 12c3-4 7-5 10-4M15 18c2-3 5-4 7-3M59 22c2-3 5-4 7-3" stroke="#fff" stroke-width="2.4" stroke-linecap="round" fill="none" opacity="0.8"/>
+          </svg>
+          <span class="sign-tab" aria-hidden="true">Ride check</span>
           <div class="ruler" id="ruler" aria-hidden="true">
             <ol class="ruler-labels">
               <li style="bottom: 20%">36</li>
@@ -61,7 +85,7 @@
           </div>
 
           <div class="checker">
-            <h2 id="checker-title">Rider height</h2>
+            <h2 id="checker-title">How tall is your rider?</h2>
             <p class="checker-height"><output id="height-out" for="height">44</output><span>inches</span></p>
             <p class="checker-metric" id="height-metric">112 cm</p>
             <div class="stepper">
@@ -87,7 +111,7 @@
       <div class="wrap">
         <div class="access-bar">
           <h2 id="access-title">Rides by park</h2>
-          <label class="check"><input type="checkbox" id="only-ok"> Only show rides this rider can board</label>
+          <label class="check"><input type="checkbox" id="only-ok"> Only show rides they can board</label>
         </div>
         <div class="park-groups" id="park-groups">
           <noscript><p>Turn on JavaScript to check rides by height. The full ride list is on the <a href="managerides.html">Manage rides</a> page.</p></noscript>
@@ -98,7 +122,7 @@
     <section class="section" aria-labelledby="parks-title">
       <div class="wrap">
         <div class="section-head">
-          <h2 id="parks-title">The parks</h2>
+          <h2 id="parks-title">Nine parks to explore</h2>
           <p>Annual visitors from the 2024 TEA/AECOM Global Experience Index. Epic Universe opened on May 22, 2025, so it has no full year of attendance yet.</p>
         </div>
         <table class="parks-table">
@@ -123,11 +147,11 @@
         <div class="next-grid">
           <a class="next-link" href="managerides.html">
             <h3>Manage rides</h3>
-            <p>Search the ride database, add a new ride, fix a height requirement or remove a ride that has closed.</p>
+            <p>Search every ride, add a new one, fix a height requirement or remove a ride that has closed.</p>
           </a>
           <a class="next-link" href="analytics.html">
             <h3>See the analytics</h3>
-            <p>Attendance trends since 2021, the fastest coasters in the state and how many rides open up with every inch.</p>
+            <p>See which parks are busiest, which coasters are fastest and how many rides open up with every inch.</p>
           </a>
         </div>
       </div>

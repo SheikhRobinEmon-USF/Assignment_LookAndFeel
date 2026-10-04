@@ -192,6 +192,81 @@
     timer = setTimeout(dismiss, action ? 7000 : 4000);
   }
 
+  /* ---------- Motion helpers ---------- */
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  function motionOK() { return !reduceMotion.matches; }
+
+  /* Counts a number up from zero. format(value) returns the display text. */
+  function countUp(el, target, format, duration) {
+    if (!el) return;
+    if (!motionOK() || !("requestAnimationFrame" in window)) { el.textContent = format(target); return; }
+    var start = null;
+    var ms = duration || 1100;
+    function frame(now) {
+      if (start === null) start = now;
+      var p = Math.min(1, (now - start) / ms);
+      var eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = format(target * eased);
+      if (p < 1) requestAnimationFrame(frame);
+      else el.textContent = format(target);
+    }
+    requestAnimationFrame(frame);
+  }
+
+  /* A short burst of confetti, used when a rider unlocks every ride. */
+  var CONFETTI_COLORS = ["#ffc93c", "#ff6fae", "#38b6ff", "#2fd39a", "#6237d4", "#ff8a3d"];
+  function confetti() {
+    if (!motionOK()) return;
+    var layer = document.createElement("div");
+    layer.className = "confetti";
+    layer.setAttribute("aria-hidden", "true");
+    for (var i = 0; i < 70; i++) {
+      var bit = document.createElement("i");
+      bit.style.left = Math.random() * 100 + "%";
+      bit.style.background = CONFETTI_COLORS[i % CONFETTI_COLORS.length];
+      bit.style.setProperty("--x", (Math.random() * 30 - 15).toFixed(1) + "vw");
+      bit.style.setProperty("--r", Math.round(Math.random() * 900 - 450) + "deg");
+      bit.style.setProperty("--t", (1.4 + Math.random() * 1.2).toFixed(2) + "s");
+      bit.style.setProperty("--d", (Math.random() * 0.3).toFixed(2) + "s");
+      if (i % 3 === 0) bit.style.borderRadius = "50%";
+      layer.appendChild(bit);
+    }
+    document.body.appendChild(layer);
+    setTimeout(function () { layer.remove(); }, 3200);
+  }
+
+  /* Range sliders paint their filled part through a CSS variable. */
+  function paintRange(input) {
+    var min = Number(input.min) || 0;
+    var max = Number(input.max) || 100;
+    input.style.setProperty("--fill", ((input.value - min) / (max - min)) * 100 + "%");
+  }
+  function initRanges() {
+    document.querySelectorAll('input[type="range"].range').forEach(function (input) {
+      paintRange(input);
+      input.addEventListener("input", function () { paintRange(input); });
+    });
+  }
+
+  /* Cards bounce in as they scroll into view, staggered within a group. */
+  var REVEAL = ".park-group, .next-link, .chart-card, .kpis > div, .feature-grid > li, .profile-card, .table-shell, .parks-table, .timeline > li";
+  function initReveal() {
+    if (!motionOK() || !("IntersectionObserver" in window)) return;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("is-in");
+        io.unobserve(entry.target);
+      });
+    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
+    document.querySelectorAll(REVEAL).forEach(function (el) {
+      var siblings = Array.prototype.filter.call(el.parentElement.children, function (c) { return c.matches(REVEAL); });
+      el.style.setProperty("--delay", Math.min(siblings.indexOf(el), 6) * 0.07 + "s");
+      el.classList.add("reveal");
+      io.observe(el);
+    });
+  }
+
   window.Coaster = {
     Store: Store,
     park: park,
@@ -206,9 +281,20 @@
     inToCm: inToCm,
     escapeHtml: escapeHtml,
     icon: icon,
-    toast: toast
+    toast: toast,
+    motionOK: motionOK,
+    countUp: countUp,
+    confetti: confetti,
+    paintRange: paintRange
   };
 
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", initNav);
-  else initNav();
+  function init() {
+    initNav();
+    initRanges();
+    initReveal();
+  }
+  /* Deferred page scripts (home.js, rides.js) run before DOMContentLoaded,
+     so waiting for it means their content exists before reveals are set up. */
+  if (document.readyState === "complete") init();
+  else document.addEventListener("DOMContentLoaded", init);
 })();

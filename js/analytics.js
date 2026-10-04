@@ -99,6 +99,43 @@
       };
     }
 
+    /* Plays a chart's intro animation once, the first time it scrolls into view.
+     * Each redraw replaces el._intro, so the animation always runs on the
+     * current marks even if the chart was resized before it was seen. */
+    var introObserver = ("IntersectionObserver" in window) ? new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        introObserver.unobserve(entry.target);
+        entry.target._introDone = true;
+        if (entry.target._intro) entry.target._intro();
+      });
+    }, { threshold: 0.25 }) : null;
+
+    function intro(el, run) {
+      if (el._introDone || !introObserver || !C.motionOK()) return;
+      el._intro = run;
+      if (!el._introObserved) { el._introObserved = true; introObserver.observe(el); }
+    }
+
+    function growBars(bars, labels, zeroPath) {
+      bars.attr("d", zeroPath)
+        .transition().duration(800).delay(function (d, i) { return 120 + i * 70; }).ease(d3.easeBackOut.overshoot(1.1))
+        .attr("d", function () { return this.__final; });
+      labels.style("opacity", 0)
+        .transition().duration(300).delay(function (d, i) { return 650 + i * 70; })
+        .style("opacity", 1);
+    }
+
+    function drawLine(paths, extras) {
+      paths.each(function () {
+        var len = this.getTotalLength();
+        d3.select(this).attr("stroke-dasharray", len + " " + len).attr("stroke-dashoffset", len)
+          .transition().duration(1300).ease(d3.easeCubicOut).attr("stroke-dashoffset", 0)
+          .on("end", function () { d3.select(this).attr("stroke-dasharray", null).attr("stroke-dashoffset", null); });
+      });
+      if (extras) extras.style("opacity", 0).transition().duration(400).delay(1000).style("opacity", 1);
+    }
+
     function svgFor(el, width, height, label) {
       d3.select(el).selectAll("svg").remove();
       return d3.select(el).insert("svg", ":first-child")
@@ -177,16 +214,23 @@
       var total = d3.sum(parks, function (p) { return p.v; });
       var prev = d3.sum(parks, function (p) { return p.prev; });
       var change = total / prev - 1;
-      document.getElementById("kpi-total").textContent = fmtM(total);
+      C.countUp(document.getElementById("kpi-total"), total, fmtM, 1200);
       document.getElementById("kpi-total-sub").textContent = (change < 0 ? "Down " : "Up ") + Math.abs(change * 100).toFixed(1) + "% from 2023";
-      document.getElementById("kpi-share").textContent = Math.round(total / D.NA_TOP20_TOTAL_2024 * 100) + "%";
+      C.countUp(document.getElementById("kpi-share"), Math.round(total / D.NA_TOP20_TOTAL_2024 * 100), function (v) { return Math.round(v) + "%"; }, 1200);
       document.getElementById("kpi-share-sub").textContent = parks.length + " of the 20 parks are in Florida";
-      document.getElementById("kpi-top").textContent = fmtM(parks[0].v);
+      C.countUp(document.getElementById("kpi-top"), parks[0].v, fmtM, 1200);
       document.getElementById("kpi-top-sub").textContent = C.fmtInt(parks[0].v) + " visits";
 
       var fastest = rides.filter(function (r) { return r.topSpeed !== null && r.topSpeed !== undefined; })
         .sort(function (a, b) { return b.topSpeed - a.topSpeed; })[0];
-      document.getElementById("kpi-fast").textContent = fastest ? C.fmtSpeed(fastest.topSpeed) : "None";
+      if (fastest) {
+        var whole = Number.isInteger(fastest.topSpeed);
+        C.countUp(document.getElementById("kpi-fast"), fastest.topSpeed, function (v) {
+          return (whole ? Math.round(v) : Math.round(v * 10) / 10) + " mph";
+        }, 1200);
+      } else {
+        document.getElementById("kpi-fast").textContent = "None";
+      }
       document.getElementById("kpi-fast-sub").textContent = fastest ? fastest.name + ", " + C.parkName(fastest.park) : "No speed-rated rides in the database";
     })();
 
@@ -218,14 +262,18 @@
         var bars = svg.append("g").selectAll("path").data(parks).join("path")
           .attr("class", "mark")
           .attr("fill", function (p) { return color(p.op); })
-          .attr("d", function (p) { return hbar(m.left, y(p.id), x(p.v) - m.left, y.bandwidth(), 4); });
+          .attr("d", function (p) { return (this.__final = hbar(m.left, y(p.id), x(p.v) - m.left, y.bandwidth(), 4)); });
 
-        svg.append("g").selectAll("text").data(parks).join("text")
+        var labels = svg.append("g").selectAll("text").data(parks).join("text")
           .attr("class", "value-label")
           .attr("x", function (p) { return x(p.v) + 6; })
           .attr("y", function (p) { return y(p.id) + y.bandwidth() / 2; })
           .attr("dy", "0.35em")
           .text(function (p) { return fmtM(p.v); });
+
+        intro(el, function () {
+          growBars(bars, labels, function (p) { return hbar(m.left, y(p.id), 0.01, y.bandwidth(), 4); });
+        });
 
         svg.append("g").selectAll("rect").data(parks).join("rect")
           .attr("class", "hit")
@@ -279,7 +327,7 @@
         var line = d3.line().x(function (d) { return x(d.year); }).y(function (d) { return y(d.v); });
 
         var series = svg.append("g").selectAll("g").data(byOperator).join("g").attr("class", "mark");
-        series.append("path")
+        var linePaths = series.append("path")
           .attr("fill", "none")
           .attr("stroke", function (s) { return color(s.op); })
           .attr("stroke-width", 2)
@@ -301,6 +349,8 @@
           .attr("y", function (s) { return y(s.values[LAST].v); })
           .attr("dy", "0.35em")
           .text(function (s) { return narrow ? OP_SHORT[s.op].replace(" Parks", "") : OP_SHORT[s.op] + " " + fmtM(s.values[LAST].v); });
+
+        intro(el, function () { drawLine(linePaths, series.selectAll("circle, text")); });
 
         var cross = svg.append("line").attr("class", "crosshair").attr("y1", m.top).attr("y2", height - m.bottom).style("opacity", 0);
 
@@ -378,14 +428,18 @@
         var bars = svg.append("g").selectAll("path").data(shown).join("path")
           .attr("class", "mark")
           .attr("fill", function (r) { return color(r.op); })
-          .attr("d", function (r) { return hbar(m.left, y(r.id), x(r.v) - m.left, y.bandwidth(), 4); });
+          .attr("d", function (r) { return (this.__final = hbar(m.left, y(r.id), x(r.v) - m.left, y.bandwidth(), 4)); });
 
-        svg.append("g").selectAll("text").data(shown).join("text")
+        var labels = svg.append("g").selectAll("text").data(shown).join("text")
           .attr("class", "value-label")
           .attr("x", function (r) { return x(r.v) + 6; })
           .attr("y", function (r) { return y(r.id) + y.bandwidth() / 2; })
           .attr("dy", "0.35em")
           .text(function (r) { return C.fmtSpeed(r.v); });
+
+        intro(el, function () {
+          growBars(bars, labels, function (r) { return hbar(m.left, y(r.id), 0.01, y.bandwidth(), 4); });
+        });
 
         svg.append("g").selectAll("rect").data(shown).join("rect")
           .attr("class", "hit")
@@ -450,9 +504,9 @@
 
         svg.append("line").attr("class", "baseline").attr("x1", m.left).attr("x2", width - m.right).attr("y1", y(0)).attr("y2", y(0));
 
-        svg.append("path")
+        var stepPath = svg.append("path")
           .attr("fill", "none")
-          .attr("stroke", "var(--lagoon)")
+          .attr("stroke", "var(--brand)")
           .attr("stroke-width", 2.5)
           .attr("stroke-linejoin", "round")
           .attr("d", d3.line().curve(d3.curveStepAfter).x(function (d) { return x(d.h); }).y(function (d) { return y(d.n); })(points));
@@ -462,12 +516,14 @@
         var mx = x(current);
         var g = svg.append("g");
         g.append("line").attr("class", "marker-line").attr("x1", mx).attr("x2", mx).attr("y1", y(0)).attr("y2", y(n));
-        g.append("circle").attr("cx", mx).attr("cy", y(n)).attr("r", 5.5).attr("fill", "var(--sign)").attr("stroke", "var(--ink)").attr("stroke-width", 2);
+        g.append("circle").attr("cx", mx).attr("cy", y(n)).attr("r", 5.5).attr("fill", "var(--sun)").attr("stroke", "var(--ink)").attr("stroke-width", 2);
         var anchorEnd = mx > width - 120;
         g.append("text").attr("class", "value-label halo")
           .attr("x", mx + (anchorEnd ? -10 : 10)).attr("y", y(n) - 10)
           .attr("text-anchor", anchorEnd ? "end" : "start")
           .text(n + " of " + total + " rides");
+
+        intro(el, function () { drawLine(stepPath, g); });
 
         var cross = svg.append("line").attr("class", "crosshair").attr("y1", m.top).attr("y2", height - m.bottom).style("opacity", 0);
 

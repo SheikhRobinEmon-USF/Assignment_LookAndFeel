@@ -2,17 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Coaster Coast: Manage rides</title>
   <meta name="description" content="Add, view, edit and delete rides in the Coaster Coast ride database.">
-  <meta name="theme-color" content="#f3f7f8" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#0d1826" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#cfeaff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#130f33" media="(prefers-color-scheme: dark)">
   <meta property="og:title" content="Coaster Coast: Manage rides">
   <meta property="og:description" content="Add, view, edit and delete rides in the Coaster Coast ride database.">
   <meta property="og:type" content="website">
   <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
   <link rel="preload" href="fonts/AtkinsonHyperlegible-Regular-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="fonts/BricolageGrotesque-var-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/Fredoka-var-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="css/main.css">
   <script>document.documentElement.classList.add("js");</script>
 </head>
@@ -22,7 +22,8 @@
     <div class="wrap header-inner">
       <a class="brand" href="index.html"><svg viewBox="0 0 40 40" aria-hidden="true" focusable="false"><rect width="40" height="40" rx="11" fill="#ffc53d"/><path d="M5 31c6 0 8-17 15-17 6 0 6 9 1 9s-4-10 3-11c6-1 8 19 11 19" fill="none" stroke="#13243a" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 35h30" stroke="#13243a" stroke-width="2.4" stroke-linecap="round"/></svg><span>Coaster Coast</span></a>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        <svg class="icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M18 6 6 18M6 6l12 12"/></svg>
         Menu
       </button>
       <nav id="site-nav" class="site-nav" aria-label="Main">
@@ -34,26 +35,34 @@
         </ul>
       </nav>
     </div>
+    <div class="bunting" aria-hidden="true"></div>
   </header>
 
   <main id="main">
-    <div class="wrap">
-      <div class="page-head section-head">
-        <div>
-          <h1>Manage rides</h1>
-          <p>Add, view, edit and delete rides in the Coaster Coast database. The home page checker and the analytics charts update with every change.</p>
-        </div>
-        <div class="manage-actions">
-          <button class="btn btn-primary" type="button" id="add-ride">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M12 5v14M5 12h14"/></svg>
-            Add ride
-          </button>
-          <button class="btn" type="button" id="reset-data">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
-            Reset sample data
-          </button>
+    <div class="sky">
+      <svg class="cloud" style="--y: 1.5rem; --w: 8.5rem; --t: 75s; --d: -12s" viewBox="0 0 120 60" aria-hidden="true" focusable="false"><path fill="currentColor" d="M28 52h66a17 17 0 0 0 1-34 25 25 0 0 0-46-7 20 20 0 0 0-23 17 12 12 0 0 0 2 24z"/></svg>
+      <svg class="cloud" style="--y: 6rem; --w: 5.5rem; --t: 95s; --d: -60s" viewBox="0 0 120 60" aria-hidden="true" focusable="false"><path fill="currentColor" d="M28 52h66a17 17 0 0 0 1-34 25 25 0 0 0-46-7 20 20 0 0 0-23 17 12 12 0 0 0 2 24z"/></svg>
+      <svg class="cloud" style="--y: 11rem; --w: 10rem; --t: 120s; --d: -35s" viewBox="0 0 120 60" aria-hidden="true" focusable="false"><path fill="currentColor" d="M28 52h66a17 17 0 0 0 1-34 25 25 0 0 0-46-7 20 20 0 0 0-23 17 12 12 0 0 0 2 24z"/></svg>
+      <div class="wrap">
+        <div class="page-head section-head">
+          <div>
+            <h1>Manage rides</h1>
+            <p>Add, view, edit and delete rides in the Coaster Coast database. The home page checker and the analytics charts update with every change.</p>
+          </div>
+          <div class="manage-actions">
+            <button class="btn btn-primary" type="button" id="add-ride">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M12 5v14M5 12h14"/></svg>
+              Add ride
+            </button>
+            <button class="btn" type="button" id="reset-data">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
+              Reset sample data
+            </button>
+          </div>
         </div>
       </div>
+    </div>
+    <div class="wrap">
 
       <p class="callout" id="demo-note">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg>

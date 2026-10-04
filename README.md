@@ -1,6 +1,6 @@
 # Coaster Coast
 
-A Florida theme park ride planner built for ISM 6225 Assignment 1 (Look and Feel) at the University of South Florida.
+A bright, family friendly Florida theme park ride planner built for ISM 6225 Assignment 1 (Look and Feel) at the University of South Florida. It helps parents and kids see which rides a child is tall enough for, park by park.
 
 **Live site:** https://sheikhrobinemon-usf.github.io/Assignment_LookAndFeel/
 
@@ -16,8 +16,9 @@ A Florida theme park ride planner built for ISM 6225 Assignment 1 (Look and Feel
 * Plain HTML, CSS and JavaScript with no build step and no CSS framework.
 * Ride data lives in `js/data.js`. The Manage rides page saves changes to `sessionStorage`, so edits show up on the home page and the analytics charts in the same browser tab. Reset sample data restores the original list.
 * Charts use D3.js v7.9.0 from the jsDelivr CDN, loaded only on the analytics page. `js/vendor/` holds a backup copy of the same release in case the CDN is blocked.
-* Fonts (Bricolage Grotesque and Atkinson Hyperlegible) are self-hosted in `fonts/` under the SIL Open Font License.
-* Responsive down to 320 px wide, with dark mode, keyboard support and reduced motion support.
+* Fonts (Fredoka for headings, Atkinson Hyperlegible for body text) are self-hosted in `fonts/` under the SIL Open Font License.
+* A "sunny day at the park" theme with a starry night dark mode, plus CSS animations: a coaster car riding across the home page, bouncing cards, count-up numbers, unlock pops, confetti and growing charts. All motion turns off when the device asks for reduced motion.
+* Responsive from 320 px phones to wide desktops with fluid type and spacing, card layouts for tables on phones, 44 px touch targets and safe-area support for notched phones.
 
 ## Data sources
 

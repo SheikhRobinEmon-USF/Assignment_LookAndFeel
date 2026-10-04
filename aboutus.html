@@ -2,17 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Coaster Coast: About us</title>
   <meta name="description" content="Who built Coaster Coast, how it was made and the technology behind it.">
-  <meta name="theme-color" content="#f3f7f8" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#0d1826" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#cfeaff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#130f33" media="(prefers-color-scheme: dark)">
   <meta property="og:title" content="Coaster Coast: About us">
   <meta property="og:description" content="Who built Coaster Coast, how it was made and the technology behind it.">
   <meta property="og:type" content="website">
   <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
   <link rel="preload" href="fonts/AtkinsonHyperlegible-Regular-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="fonts/BricolageGrotesque-var-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/Fredoka-var-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="css/main.css">
   <script>document.documentElement.classList.add("js");</script>
 </head>
@@ -22,7 +22,8 @@
     <div class="wrap header-inner">
       <a class="brand" href="index.html"><svg viewBox="0 0 40 40" aria-hidden="true" focusable="false"><rect width="40" height="40" rx="11" fill="#ffc53d"/><path d="M5 31c6 0 8-17 15-17 6 0 6 9 1 9s-4-10 3-11c6-1 8 19 11 19" fill="none" stroke="#13243a" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 35h30" stroke="#13243a" stroke-width="2.4" stroke-linecap="round"/></svg><span>Coaster Coast</span></a>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        <svg class="icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M18 6 6 18M6 6l12 12"/></svg>
         Menu
       </button>
       <nav id="site-nav" class="site-nav" aria-label="Main">
@@ -34,14 +35,22 @@
         </ul>
       </nav>
     </div>
+    <div class="bunting" aria-hidden="true"></div>
   </header>
 
   <main id="main">
-    <div class="wrap">
-      <div class="page-head">
-        <h1>About us</h1>
-        <p>Coaster Coast is a one person project. Here is who built it, why, and how it works under the hood.</p>
+    <div class="sky">
+      <svg class="cloud" style="--y: 1.5rem; --w: 8.5rem; --t: 75s; --d: -12s" viewBox="0 0 120 60" aria-hidden="true" focusable="false"><path fill="currentColor" d="M28 52h66a17 17 0 0 0 1-34 25 25 0 0 0-46-7 20 20 0 0 0-23 17 12 12 0 0 0 2 24z"/></svg>
+      <svg class="cloud" style="--y: 6rem; --w: 5.5rem; --t: 95s; --d: -60s" viewBox="0 0 120 60" aria-hidden="true" focusable="false"><path fill="currentColor" d="M28 52h66a17 17 0 0 0 1-34 25 25 0 0 0-46-7 20 20 0 0 0-23 17 12 12 0 0 0 2 24z"/></svg>
+      <svg class="cloud" style="--y: 11rem; --w: 10rem; --t: 120s; --d: -35s" viewBox="0 0 120 60" aria-hidden="true" focusable="false"><path fill="currentColor" d="M28 52h66a17 17 0 0 0 1-34 25 25 0 0 0-46-7 20 20 0 0 0-23 17 12 12 0 0 0 2 24z"/></svg>
+      <div class="wrap">
+        <div class="page-head">
+          <h1>About us</h1>
+          <p>Coaster Coast is a one person project. Here is who built it, who it is for, and how it works under the hood.</p>
+        </div>
       </div>
+    </div>
+    <div class="wrap">
 
       <div class="about-grid">
         <aside class="profile-card" aria-labelledby="profile-name">
@@ -88,31 +97,61 @@
             </li>
           </ol>
 
-          <h2>Why theme parks</h2>
+          <h2>Who it's for</h2>
           <p>Theme parks were my assigned topic, and it turned out to be a good one. USF sits right next to Busch Gardens Tampa Bay, and Orlando's parks are about an hour and a half up I-4. I approached the site the way I'd approach any product: start with a real user and a real problem.</p>
-          <p>The user I picked is a parent planning a Florida trip with kids of different heights. Height minimums are spread across dozens of park pages, and finding out at the front of a long line that a child is two inches short ruins the day. So the home page opens with a height checker that shows every ride a rider can board, park by park. The analytics page answers the follow up questions: which parks are busiest, how crowds have changed since 2021, which coasters are fastest and how many rides open up with each inch.</p>
+          <p>The audience is young families. That means parents planning a Florida trip with kids of roughly 3 to 12, and the kids themselves, who mostly want to know which coasters they are finally tall enough for. Height minimums are spread across dozens of park pages, and finding out at the front of a long line that a child is two inches short ruins the day. So the home page opens with a height checker that shows every ride a rider can board, park by park.</p>
+
+          <h2>The look and feel</h2>
+          <p>I wanted the site to feel like a sunny day at the park: cheerful enough for a seven year old and still clear enough for a busy parent. The pages sit under a sky blue backdrop with drifting clouds and a string of pennant bunting below the menu. Cards look like bold outlined stickers in sunshine yellow, cotton candy pink, mint and sky blue, and the striped ruler with its pink star comes straight from the height signs at ride entrances. In dark mode the sky turns into a starry night at the park.</p>
+          <p>Headings use Fredoka, a rounded and friendly typeface. Body text uses Atkinson Hyperlegible, which the Braille Institute designed to be easy to read, because parents should never have to squint at a height requirement.</p>
+          <p>Animation adds to the fun without getting in the way. A little coaster car rides the track across the home page, balloons bob beside the height sign and the numbers count up as the page loads. When a child grows past a height line, the newly unlocked rides pop, and confetti falls once every ride is open to them. Cards bounce in and charts grow into place as you scroll. Anyone who turns on reduced motion in their device settings gets a calm, still version of the site.</p>
+
+          <h2>What's on the site</h2>
+          <ul class="feature-grid">
+            <li><h3>Home</h3><p>The height checker, every ride grouped by park with a check or a lock, and how many people visited each park in 2024.</p></li>
+            <li><h3>Manage rides</h3><p>A mock database of 27 rides. Search, filter and sort them, then add, view, edit or delete a ride with a validated form and undo.</p></li>
+            <li><h3>Analytics</h3><p>Four D3.js charts: visitors per park, visitors by operator since 2021, the fastest rides and how many rides open at each height.</p></li>
+            <li><h3>About us</h3><p>This page: who built the site, who it is for, how it was made and what I learned along the way.</p></li>
+          </ul>
+
+          <h2>Built for every screen</h2>
+          <p>Parents look things up on their phones while standing in line, so the site had to work just as well on a small screen as on a laptop.</p>
+          <ul>
+            <li>Layouts reflow from 320 pixel phones to wide desktop monitors, and text and spacing scale smoothly in between instead of jumping at a few fixed sizes.</li>
+            <li>On phones the ride table turns into easy to scan cards, and the menu folds into a single button.</li>
+            <li>Buttons, icons and the height slider are at least 44 pixels tall so small fingers can tap them, and the slider has an extra large handle.</li>
+            <li>Charts redraw to fit their space whenever the screen size or orientation changes.</li>
+            <li>The site keeps clear of phone notches and home bars, and follows the device's light or dark setting.</li>
+          </ul>
 
           <h2>How I built it</h2>
           <p>I started with the data, because a data site is only as good as its numbers. Attendance comes from the TEA/AECOM Global Experience Index, the standard industry report. I checked every ride's minimum height, speed and opening year against the parks and public ride references. That check caught real changes: Hollywood Rip Ride Rockit closed in August 2025, and Big Thunder Mountain reopened in 2026 with a lower 38 inch minimum. Closed rides are not on the list.</p>
-          <p>Next I planned four pages around one consistent menu, then built a small design system first: colors, type scale, spacing and components defined once in a single stylesheet. The yellow ruler and the sign colors borrow from the height signs at every ride entrance. The site supports dark mode, reduced motion and phone screens down to 320 pixels wide.</p>
+          <p>Next I planned four pages around one consistent menu, then built a small design system first: colors, type scale, spacing, shadows and animations defined once in a single stylesheet, so every page shares the same look.</p>
           <p>A few decisions shaped the build:</p>
           <ul>
             <li><strong>No CSS framework, no third party fonts.</strong> Bootstrap was allowed, but hand written CSS kept the stylesheet small and let the site look like its subject instead of a template. The fonts are trimmed to the characters the site uses and hosted in the repository, so pages make no extra requests to other servers.</li>
             <li><strong>D3.js from the CDN.</strong> The charts use D3.js v7.9.0 from the jsDelivr CDN, and it loads only on the analytics page. A copy of the same release lives in the repository as a backup, so the charts still work if the CDN is ever blocked.</li>
             <li><strong>One shared data store.</strong> The Manage rides page mocks create, read, update and delete operations on a ride list saved in the browser tab. The height checker and the analytics charts read the same list, so a ride added on one page shows up on the others.</li>
-            <li><strong>Accessible by default.</strong> Every page has a skip link, visible keyboard focus and labeled form fields. Forms explain exactly what to fix, and every chart has a data table view and colors tested for color blindness.</li>
+            <li><strong>Lightweight animation.</strong> Every animation uses CSS or a few lines of JavaScript, with no animation library, and none of them blocks the page from loading.</li>
+            <li><strong>Accessible by default.</strong> Every page has a skip link, visible keyboard focus and labeled form fields. Forms explain exactly what to fix, every color pair passes contrast checks, and every chart has a data table view and colors tested for color blindness.</li>
           </ul>
+
+          <h2>What I learned</h2>
+          <p>The biggest lesson was that a data site is only as trustworthy as its data. I assumed ride details would be easy to look up, but checking each one turned up a ride that had closed in 2025 and another whose height minimum had changed. If I had copied numbers from memory or a single list, the site would have looked polished and still been wrong.</p>
+          <p>I also learned how much of good design is invisible. Getting the CRUD form to feel right took more work than building it: clear error messages, putting the cursor back where the user started after a dialog closes, and an undo button so a delete isn't scary. Running an accessibility check showed that some of my gray text was too light to read comfortably, which I never would have noticed by eye.</p>
+          <p>Designing for families taught me that a playful look has to earn its place. Bright colors, rounded type and a coaster car are fun, but they only work if a parent can still find an answer in a few seconds on a phone. Small wording choices mattered too: "5 more rides open up at 48 inches" turns a rule into something a child can look forward to. Keeping the fun and the clarity together meant checking every color for contrast and making sure the animations switch off for anyone who prefers less motion.</p>
+          <p>Finally, coming from product management, I enjoyed making the tradeoffs myself instead of writing them in a spec. Skipping Bootstrap, trimming the fonts and loading the chart library only where it is needed were small choices, but together they kept every page fast on a phone. Next time I would sketch the mobile layout first, since most of my layout fixes came from testing on small screens.</p>
 
           <h2>Technology</h2>
           <table class="stack-table">
             <caption class="visually-hidden">Technologies used to build Coaster Coast</caption>
             <tbody>
               <tr><th scope="row">HTML5</th><td>Semantic page structure, native dialog elements for the ride forms, accessible tables and form controls.</td></tr>
-              <tr><th scope="row">CSS3</th><td>One stylesheet with custom properties, grid and flexbox layouts, a dark theme and responsive table layouts for phones.</td></tr>
-              <tr><th scope="row">JavaScript</th><td>Plain JavaScript with no build step. Handles the height checker, the mock CRUD with validation and undo, and the mobile menu.</td></tr>
+              <tr><th scope="row">CSS3</th><td>One stylesheet with custom properties, fluid type, grid and flexbox layouts, keyframe animations, a dark theme and responsive table layouts for phones.</td></tr>
+              <tr><th scope="row">JavaScript</th><td>Plain JavaScript with no build step. Handles the height checker, the mock CRUD with validation and undo, the mobile menu, scroll animations and the coaster that rides across the home page.</td></tr>
               <tr><th scope="row">D3.js v7.9.0</th><td>Loaded from the jsDelivr CDN with an integrity check. Draws the bar, line and step charts with tooltips, direct labels and responsive resizing.</td></tr>
               <tr><th scope="row">Web storage</th><td>sessionStorage keeps ride edits for the current browser tab, so the CRUD page behaves like a real database without a server.</td></tr>
-              <tr><th scope="row">Fonts</th><td>Bricolage Grotesque for headings and Atkinson Hyperlegible for body text, self-hosted as WOFF2 files under the SIL Open Font License.</td></tr>
+              <tr><th scope="row">Fonts</th><td>Fredoka for headings and Atkinson Hyperlegible for body text, self-hosted as WOFF2 files under the SIL Open Font License.</td></tr>
               <tr><th scope="row">GitHub Pages</th><td>Hosts the site straight from the repository.</td></tr>
             </tbody>
           </table>

@@ -33,16 +33,24 @@
     var total2024 = Object.keys(D.ATTENDANCE).reduce(function (sum, id) {
       return sum + D.ATTENDANCE[id][D.ATTENDANCE[id].length - 1];
     }, 0);
-    document.getElementById("fact-parks").textContent = D.PARKS.length;
-    document.getElementById("fact-rides").textContent = C.Store.all().length;
-    document.getElementById("fact-visitors").textContent = C.fmtMillions(total2024);
+    var whole = function (v) { return String(Math.round(v)); };
+    C.countUp(document.getElementById("fact-parks"), D.PARKS.length, whole, 900);
+    C.countUp(document.getElementById("fact-rides"), C.Store.all().length, whole, 1100);
+    C.countUp(document.getElementById("fact-visitors"), total2024, function (v) { return C.fmtMillions(v); }, 1300);
   }
 
   /* ---------- Height checker ---------- */
+  var lastOk = null;      /* ids open at the previous height, to animate newly unlocked rides */
+  var lastCount = null;
+
   function update() {
     var h = parseInt(els.range.value, 10);
     var rides = C.Store.all();
     var ok = rides.filter(function (r) { return canRide(r, h); });
+    var okIds = {};
+    ok.forEach(function (r) { okIds[r.id] = true; });
+    var unlocked = {};
+    if (lastOk) ok.forEach(function (r) { if (!lastOk[r.id]) unlocked[r.id] = true; });
 
     els.out.textContent = heightLabel(h);
     els.range.setAttribute("aria-valuetext", (h >= MAX ? "60 inches or taller" : h + " inches"));
@@ -62,15 +70,24 @@
         .sort(function (a, b) { return a - b; })[0];
       if (next) {
         var more = rides.filter(function (r) { return r.minHeight === next; }).length;
-        els.note.textContent = "Grow to " + next + " inches to unlock " + more + " more " + (more === 1 ? "ride" : "rides") + ". Parks measure at the entrance, so treat this as a guide.";
+        els.note.textContent = more + " more " + (more === 1 ? "ride opens" : "rides open") + " up at " + next + " inches. Parks measure every rider at the entrance, so treat this as a guide.";
       } else {
-        els.note.textContent = "Every ride on the list is open to this rider. Parks still measure at the entrance.";
+        els.note.textContent = "Every ride on the list is unlocked. Have a blast, and remember parks still measure at the entrance.";
       }
     }
-    renderGroups(rides, h);
+
+    if (lastCount !== null && lastCount !== ok.length) {
+      els.count.classList.remove("pop");
+      void els.count.offsetWidth;   /* restart the animation */
+      els.count.classList.add("pop");
+      if (ok.length === rides.length && rides.length > 0) C.confetti();
+    }
+    lastCount = ok.length;
+    renderGroups(rides, h, unlocked);
+    lastOk = okIds;
   }
 
-  function renderGroups(rides, h) {
+  function renderGroups(rides, h, unlocked) {
     var onlyOk = els.onlyOk.checked;
     var html = D.PARKS.map(function (p) {
       var list = rides
@@ -81,7 +98,7 @@
       var shown = onlyOk ? list.filter(function (r) { return canRide(r, h); }) : list;
       var items = shown.map(function (r) {
         var yes = canRide(r, h);
-        return '<li class="' + (yes ? "ok" : "no") + '">' +
+        return '<li class="' + (yes ? "ok" : "no") + (unlocked[r.id] ? " just-unlocked" : "") + '">' +
           C.icon(yes ? "check" : "lock") +
           '<span class="ride-name">' + C.escapeHtml(r.name) +
           '<span class="visually-hidden">' + (yes ? ", can ride" : ", too short") + "</span></span>" +
@@ -123,7 +140,76 @@
   function step(delta) {
     var v = Math.min(MAX, Math.max(MIN, parseInt(els.range.value, 10) + delta));
     els.range.value = v;
+    C.paintRange(els.range);
     update();
+  }
+
+  /* ---------- The coaster that rides across the hero ----------
+   * The track is drawn in pixels for the hero's real width, so the car's
+   * CSS offset-path and the SVG rails always line up, loop included.
+   */
+  var ride = {
+    box: document.getElementById("coaster-ride"),
+    art: document.getElementById("track-art"),
+    rail: document.getElementById("track-rail"),
+    ties: document.getElementById("track-ties"),
+    car: document.getElementById("coaster-car")
+  };
+
+  function trackPath(w, h) {
+    var b = h - 14;            /* ground level of the track */
+    var hill = h * 0.18;       /* top of the hills */
+    var loopX = Math.round(w * 0.58);
+    var r = Math.min(34, h * 0.3);
+    var f = function (n) { return Math.round(n); };
+    if (w < 640) {
+      /* phones: one hill and the loop, so the track stays readable */
+      var lx = Math.round(w * 0.62);
+      return [
+        "M", -90, b,
+        "C", f(w * 0.05), b, f(w * 0.12), hill, f(w * 0.26), hill,
+        "S", f(lx - r * 1.6), b, lx, b,
+        "C", f(lx + r * 1.5), b, f(lx + r * 1.2), b - r * 2.2, lx, b - r * 2.2,
+        "C", f(lx - r * 1.2), b - r * 2.2, f(lx - r * 1.5), b, lx + 6, b,
+        "S", f(w * 0.95), b, w + 90, b
+      ].join(" ");
+    }
+    return [
+      "M", -90, b,
+      "C", f(w * 0.08), b, f(w * 0.1), hill, f(w * 0.2), hill,
+      "S", f(w * 0.3), b, f(w * 0.38), b - 6,
+      "S", f(w * 0.44), hill + 22, f(w * 0.5), hill + 22,
+      "S", f(loopX - r * 1.6), b, loopX, b,
+      "C", f(loopX + r * 1.5), b, f(loopX + r * 1.2), b - r * 2.2, loopX, b - r * 2.2,
+      "C", f(loopX - r * 1.2), b - r * 2.2, f(loopX - r * 1.5), b, loopX + 6, b,
+      "C", f(w * 0.78), b, f(w * 0.82), hill + 8, f(w * 0.9), hill + 8,
+      "S", f(w * 0.97), b, w + 90, b
+    ].join(" ");
+  }
+
+  function layTrack() {
+    if (!ride.box || !ride.car) return;
+    var w = ride.box.clientWidth;
+    var h = ride.box.clientHeight;
+    if (!w || !h) return;
+    var d = trackPath(w, h);
+    ride.art.setAttribute("viewBox", "0 0 " + w + " " + h);
+    ride.rail.setAttribute("d", d);
+    ride.ties.setAttribute("d", d);
+    if (C.motionOK() && window.CSS && CSS.supports("offset-path", 'path("M0 0L1 1")')) {
+      ride.car.style.offsetPath = 'path("' + d + '")';
+    } else {
+      ride.car.style.display = "none";
+    }
+  }
+
+  if (ride.box) {
+    layTrack();
+    var trackFrame = 0;
+    window.addEventListener("resize", function () {
+      cancelAnimationFrame(trackFrame);
+      trackFrame = requestAnimationFrame(layTrack);
+    });
   }
 
   els.range.addEventListener("input", update);
