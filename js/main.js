@@ -255,8 +255,15 @@
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (!entry.isIntersecting) return;
-        entry.target.classList.add("is-in");
-        io.unobserve(entry.target);
+        var el = entry.target;
+        el.classList.add("is-in");
+        io.unobserve(el);
+        /* once the card has landed, drop the reveal classes so its own hover transition takes over */
+        var delay = parseFloat(el.style.getPropertyValue("--delay")) || 0;
+        setTimeout(function () {
+          el.classList.remove("reveal", "is-in");
+          el.style.removeProperty("--delay");
+        }, (delay + 0.8) * 1000);
       });
     }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
     document.querySelectorAll(REVEAL).forEach(function (el) {

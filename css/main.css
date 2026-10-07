@@ -1392,6 +1392,46 @@ dialog.modal::backdrop { background: rgb(33 26 77 / 0.5); backdrop-filter: blur(
 .js .height-sign { animation-delay: 0.24s; }
 @keyframes rise-in { from { opacity: 0; transform: translateY(28px) rotate(-1deg); } to { opacity: 1; transform: none; } }
 
+/* ---------- Hover effects for cards and buttons ---------- */
+/* Cards lift and their sticker shadow grows. The translate property is used
+   so it adds to any rotation a card already has instead of replacing it. */
+.park-group, .chart-card, .kpis > div, .feature-grid > li, .profile-card, .hero-facts div {
+  transition: translate 0.25s var(--ease-spring), box-shadow 0.25s ease, border-color 0.2s ease;
+}
+@media (hover: hover) {
+  .park-group:hover, .kpis > div:hover, .feature-grid > li:hover, .hero-facts div:hover {
+    translate: -2px -4px;
+    box-shadow: var(--sticker-hover);
+  }
+  .chart-card:hover, .profile-card:hover {
+    translate: -2px -3px;
+    box-shadow: var(--sticker-hover);
+  }
+  .park-group:hover h3 { background: color-mix(in srgb, var(--sun) 30%, var(--surface)); }
+  .avatar { transition: rotate 0.4s var(--ease-spring); }
+  .profile-card:hover .avatar { rotate: -6deg; }
+}
+.park-group h3 { transition: background-color 0.2s ease; }
+
+/* Buttons: a color shift on top of the existing lift */
+.btn:not(.btn-quiet):hover { background: color-mix(in srgb, var(--btn-bg) 82%, var(--brand-wash)); }
+.btn.btn-primary:hover { background: var(--sun-deep); }
+.btn.btn-danger:hover { background: color-mix(in srgb, var(--coral) 85%, #000); }
+.btn svg { transition: transform 0.25s var(--ease-spring); }
+.btn:hover svg { transform: scale(1.12); }
+
+.nav-toggle, .toast button { transition: transform 0.2s var(--ease-spring), box-shadow 0.2s ease, background-color 0.15s ease; }
+.nav-toggle:hover, .toast button:hover { background: var(--sun-deep); }
+@media (hover: hover) {
+  .nav-toggle:hover { transform: translate(-1px, -2px); box-shadow: var(--sticker); }
+  .toast button:hover { transform: scale(1.06); }
+}
+.nav-toggle:active { transform: translate(2px, 3px); box-shadow: none; }
+
+.sort-btn { transition: color 0.15s ease; }
+.sort-btn:hover { color: var(--brand); }
+.sort-btn:hover svg { opacity: 1; transform: translateY(-2px); }
+
 /* ---------- Motion preferences and print ---------- */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
